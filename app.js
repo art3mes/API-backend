@@ -1,6 +1,7 @@
 const express = require("express");
 const cors =require ("cors");           //to enable access from multiple domains
 const bodyParser =require("body-parser");
+const https=require ("https"); 
 require('dotenv').config();
     
 const app=express();
@@ -14,15 +15,19 @@ const corsOptions ={
 }
 app.use(cors(corsOptions));
 
-app.post("/weather", function(req,res){
-    // console.log(req.body.cityName);
+app.get("/", function(req,res){
+    res.send("yes");
+});
+
+app.post("/", function(req,res){
+    console.log(req.body.cityName);
     const query=req.body.cityName;
     const appKey=process.env.APPKEY;
     const metric="metric";
 
     const url="https://api.openweathermap.org/data/2.5/weather?q="+query+"&appid="+appKey+"&units="+metric;
     https.get(url,function(response){          
-        console.log(response.statusCode);                                                               
+        //console.log(response.statusCode);                                                               
         response.on("data",function(data){                  
             const weatherDATA= JSON.parse(data);      
             const temp=weatherDATA.main.temp;
@@ -38,6 +43,6 @@ app.post("/weather", function(req,res){
 });
 
 
-app.listen(process.env.ROOT||4000,function(){
+app.listen(process.env.ROOT||3001,function(){
     console.log("server is running");
 });
