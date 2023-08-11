@@ -19,7 +19,7 @@ app.get("/", function(req,res){
     res.send("yes");
 });
 
-app.post("/", function(req,res){
+app.post("/weather", function(req,res){
     console.log(req.body.cityName);
     const query=req.body.cityName;
     const appKey=process.env.APPKEY;
