@@ -53,10 +53,10 @@ app.post("/animequote", async function(req,res){
     await fetch(process.env.ANIMEURL+param)
           .then((response) => response.json())
           .then((quote) => 
-            
             DATA = quote
           );
     console.log(DATA);
+    res.send(DATA);
 });
 
 
