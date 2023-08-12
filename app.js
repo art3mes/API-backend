@@ -25,7 +25,7 @@ app.post("/weather", function(req,res){
     const appKey=process.env.APPKEY;
     const metric="metric";
 
-    const url="https://api.openweathermap.org/data/2.5/weather?q="+query+"&appid="+appKey+"&units="+metric;
+    const url=process.env.WEATHERURL+query+"&appid="+appKey+"&units="+metric;
     https.get(url,function(response){                                                                       
         response.on("data",function(data){                  
             const weatherDATA= JSON.parse(data);      
@@ -33,7 +33,7 @@ app.post("/weather", function(req,res){
             const DATA = {
                 temp:weatherDATA.main.temp,
                 desc: weatherDATA.weather[0].description,
-                imageURL:"http://openweathermap.org/img/wn/"+icon+"@2x.png"
+                imageURL:process.env.WEATHERIMAGEURL+icon+"@2x.png"
             };
             res.send(DATA);
         });
