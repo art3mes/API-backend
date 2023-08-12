@@ -20,7 +20,7 @@ app.get("/", function(req,res){
 });
 
 app.post("/weather", function(req,res){
-    console.log(req.body.cityName);
+    //console.log(req.body.cityName);
     const query=req.body.cityName;
     const appKey=process.env.APPKEY;
     const metric="metric";
@@ -38,6 +38,25 @@ app.post("/weather", function(req,res){
             res.send(DATA);
         });
     });
+});
+
+app.post("/animequote", async function(req,res){
+    const title = req.body.title;
+    //console.log(title);
+    let DATA ={};
+    let param = "";
+    if(title.length != 0 ){
+        param = "anime?title="+title;
+    }else{
+        param = "";
+    }
+    await fetch(process.env.ANIMEURL+param)
+          .then((response) => response.json())
+          .then((quote) => 
+            
+            DATA = quote
+          );
+    console.log(DATA);
 });
 
 
