@@ -3,6 +3,7 @@ const cors =require ("cors");           //to enable access from multiple domains
 const bodyParser =require("body-parser");
 const https=require ("https"); 
 require('dotenv').config();
+var validUrl = require('valid-url');
     
 const app=express();
 app.use(bodyParser.json());
@@ -59,6 +60,20 @@ app.post("/animequote", async function(req,res){
     res.send(DATA);
 });
 
+app.post("/qrcodegenerator", function(req,res){
+    const link=req.body.URL;
+
+    if (validUrl.isUri(link)){
+        const url=process.env.QRCODEGENERATORURL+link;
+        console.log(url);
+        res.send(url);
+    } else {
+        console.log("error");
+        res.send("error");
+    }
+
+    
+});
 
 app.listen(process.env.ROOT||3001,function(){
     console.log("server is running");
