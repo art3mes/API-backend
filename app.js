@@ -4,6 +4,7 @@ const bodyParser =require("body-parser");
 const https=require ("https"); 
 require('dotenv').config();
 var validUrl = require('valid-url');
+const request = require('request');
     
 const app=express();
 app.use(bodyParser.json());
@@ -74,6 +75,22 @@ app.post("/qrcodegenerator", function(req,res){
 
     
 });
+
+app.post("/qotd", function(req,res){
+    
+    var category = 'happiness';
+    request.get({
+    url: process.env.QOTDURL + category,
+    headers: {
+        'X-Api-Key': process.env.APININJAKEY
+    },
+    }, function(error, response, body) {
+    if(error) return console.error('Request failed:', error);
+    else if(response.statusCode != 200) return console.error('Error:', response.statusCode, body.toString('utf8'));
+    else console.log(body)
+    });
+});
+
 
 app.listen(process.env.ROOT||3001,function(){
     console.log("server is running");
