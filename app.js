@@ -79,6 +79,7 @@ app.post("/qrcodegenerator", function(req,res){
 app.post("/qotd", function(req,res){
     
     var category = 'happiness';
+    let DATA = {};
     request.get({
     url: process.env.QOTDURL + category,
     headers: {
@@ -86,9 +87,15 @@ app.post("/qotd", function(req,res){
     },
     }, function(error, response, body) {
     if(error) return console.error('Request failed:', error);
-    else if(response.statusCode != 200) return console.error('Error:', response.statusCode, body.toString('utf8'));
-    else console.log(body)
+    else if(response.statusCode != 200) 
+        return console.error('Error:', response.statusCode, body.toString('utf8'));
+    else {
+        DATA=body;
+        console.log(DATA)
+        res.send(DATA);
+    }     
     });
+   
 });
 
 
