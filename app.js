@@ -78,7 +78,7 @@ app.post("/qrcodegenerator", function(req,res){
 
 app.post("/qotd", function(req,res){
     
-    var category = 'happiness';
+    var category = req.body.category;
     let DATA = {};
     request.get({
     url: process.env.QOTDURL + category,
