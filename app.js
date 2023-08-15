@@ -99,6 +99,10 @@ app.post("/qotd", function(req,res){
 });
 
 
+app.post("/riddle", function(req,res){
+    
+});
+
 app.listen(process.env.ROOT||3001,function(){
     console.log("server is running");
 });
