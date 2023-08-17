@@ -78,10 +78,10 @@ app.post("/qrcodegenerator", function(req,res){
 
 app.post("/qotd", function(req,res){
     
-    var category = req.body.category;
+    //var category = req.body.category;
     let DATA = {};
     request.get({
-    url: process.env.QOTDURL + category,
+    url: process.env.QOTDURL,
     headers: {
         'X-Api-Key': process.env.APININJAKEY
     },
