@@ -98,9 +98,23 @@ app.post("/qotd", function(req,res){
    
 });
 
-
 app.post("/riddle", function(req,res){
-    
+    let DATA = {};
+    request.get({
+    url: process.env.RIDDLEURL,
+    headers: {
+        'X-Api-Key': process.env.APININJAKEY
+    },
+    }, function(error, response, body) {
+    if(error) return console.error('Request failed:', error);
+    else if(response.statusCode != 200) 
+    return console.error('Error:', response.statusCode, body.toString('utf8'));
+    else {
+        DATA = body;
+        console.log(body);
+        res.send(DATA);
+    }
+    });
 });
 
 app.listen(process.env.ROOT||3001,function(){
