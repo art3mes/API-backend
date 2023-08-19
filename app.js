@@ -30,7 +30,8 @@ app.post("/weather", function(req,res){
     const url=process.env.WEATHERURL+query+"&appid="+appKey+"&units="+metric;
     https.get(url,function(response){                                                                       
         response.on("data",function(data){                  
-            const weatherDATA= JSON.parse(data);      
+            const weatherDATA= JSON.parse(data);     
+            console.log(weatherDATA.weather[0]); 
             const icon=weatherDATA.weather[0].icon;
             const DATA = {
                 temp:weatherDATA.main.temp,
