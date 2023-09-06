@@ -43,24 +43,24 @@ app.post("/weather", function(req,res){
     });
 });
 
-app.post("/animequote", async function(req,res){
-    const title = req.body.title;
-    //console.log(title);
-    let DATA ={};
-    let param = "";
-    if(title.length != 0 ){
-        param = "anime?title="+title;
-    }else{
-        param = "";
-    }
-    await fetch(process.env.ANIMEURL+param)
-          .then((response) => response.json())
-          .then((quote) => 
-            DATA = quote
-          );
-    console.log(DATA);
-    res.send(DATA);
-});
+// app.post("/animequote", async function(req,res){
+//     const title = req.body.title;
+//     //console.log(title);
+//     let DATA ={};
+//     let param = "";
+//     if(title.length != 0 ){
+//         param = "anime?title="+title;
+//     }else{
+//         param = "";
+//     }
+//     await fetch(process.env.ANIMEURL+param)
+//           .then((response) => response.json())
+//           .then((quote) => 
+//             DATA = quote
+//           );
+//     console.log(DATA);
+//     res.send(DATA);
+// });
 
 app.post("/qrcodegenerator", function(req,res){
     const link=req.body.URL;
@@ -119,6 +119,7 @@ app.post("/riddle", function(req,res){
 });
 
 app.post("/semantic", function(req,res){
+    let DATA={};
     var text = req.body.text;
     request.get({
     url: 'https://api.api-ninjas.com/v1/sentiment?text=' + text,
@@ -130,8 +131,10 @@ app.post("/semantic", function(req,res){
         return console.error('Request failed:', error);
     else if(response.statusCode != 200) 
         return console.error('Error:', response.statusCode, body.toString('utf8'));
-    else   
-        console.log(body)
+    else{
+        DATA = body;
+        res.send(DATA);
+    }   
     });
 }); 
 app.listen(process.env.ROOT||3001,function(){
