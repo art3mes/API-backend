@@ -31,7 +31,7 @@ app.post("/weather", function(req,res){
     https.get(url,function(response){                                                                       
         response.on("data",function(data){                  
             const weatherDATA= JSON.parse(data);     
-            console.log(weatherDATA.weather[0]); 
+            //console.log(weatherDATA.weather[0]); 
             const icon=weatherDATA.weather[0].icon;
             const DATA = {
                 temp:weatherDATA.main.temp,
@@ -118,6 +118,22 @@ app.post("/riddle", function(req,res){
     });
 });
 
+app.post("/semantic", function(req,res){
+    var text = req.body.text;
+    request.get({
+    url: 'https://api.api-ninjas.com/v1/sentiment?text=' + text,
+    headers: {
+        'X-Api-Key': process.env.APININJAKEY
+    },
+    }, function(error, response, body) {
+    if(error) 
+        return console.error('Request failed:', error);
+    else if(response.statusCode != 200) 
+        return console.error('Error:', response.statusCode, body.toString('utf8'));
+    else   
+        console.log(body)
+    });
+}); 
 app.listen(process.env.ROOT||3001,function(){
     console.log("server is running");
 });
