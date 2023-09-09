@@ -32,13 +32,23 @@ app.post("/weather", function(req,res){
         response.on("data",function(data){                  
             const weatherDATA= JSON.parse(data);     
             //console.log(weatherDATA.weather[0]); 
-            const icon=weatherDATA.weather[0].icon;
+            //const icon=weatherDATA.weather[0].icon;
+            // const DATA = {
+            //     temp:weatherDATA.main.temp,
+            //     desc: weatherDATA.weather[0].description,
+            //     imageURL:process.env.WEATHERIMAGEURL+weatherDATA.weather[0].icon+"@2x.png"
+            // };
+            // res.send(DATA);
+            try {
             const DATA = {
-                temp:weatherDATA.main.temp,
+                temp: weatherDATA.main.temp + "°C",
                 desc: weatherDATA.weather[0].description,
-                imageURL:process.env.WEATHERIMAGEURL+icon+"@2x.png"
+                imageURL: process.env.WEATHERIMAGEURL + weatherDATA.weather[0].icon + "@2x.png",
             };
-            res.send(DATA);
+                res.send(DATA);
+            } catch (error) {
+                res.send("Invalid Entry"); // Send an error response
+            }
         });
     });
 });
